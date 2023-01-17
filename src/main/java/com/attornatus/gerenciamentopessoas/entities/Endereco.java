@@ -7,6 +7,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -22,16 +24,21 @@ public class Endereco implements Serializable {
 	private Integer numero;
 	private String cidade;
 	
+	@ManyToOne
+	@JoinColumn(name = "pessoa_id")
+	private Pessoa pessoa;
+	
 	
 	public Endereco() {
 	}
 
-	public Endereco(Long id, String logradouro, Long cep, Integer numero, String cidade) {
+	public Endereco(Long id, String logradouro, Long cep, Integer numero, String cidade, Pessoa pessoa) {
 		this.id = id;
 		this.logradouro = logradouro;
 		this.cep = cep;
 		this.numero = numero;
 		this.cidade = cidade;
+		this.pessoa = pessoa;
 	}
 
 	public Long getId() {
@@ -72,6 +79,14 @@ public class Endereco implements Serializable {
 
 	public void setCidade(String cidade) {
 		this.cidade = cidade;
+	}
+
+	public Pessoa getPessoa() {
+		return pessoa;
+	}
+
+	public void setPessoa(Pessoa pessoa) {
+		this.pessoa = pessoa;
 	}
 
 	@Override
