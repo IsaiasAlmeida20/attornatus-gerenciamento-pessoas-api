@@ -3,6 +3,7 @@ package com.attornatus.gerenciamentopessoas.entities;
 import java.io.Serializable;
 import java.util.Objects;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -19,13 +20,21 @@ public class Endereco implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	
+	@Column(nullable = false)
 	private String logradouro;
+	
+	@Column(nullable = false)
 	private Long cep;
+	
+	@Column(nullable = false)
 	private Integer numero;
+	
+	@Column(nullable = false)
 	private String cidade;
 	
 	@ManyToOne
-	@JoinColumn(name = "pessoa_id")
+	@JoinColumn(name = "pessoa_id", nullable = false)
 	private Pessoa pessoa;
 	
 	
