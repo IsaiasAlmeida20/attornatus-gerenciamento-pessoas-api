@@ -2,7 +2,11 @@ package com.attornatus.gerenciamentopessoas.dto;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
+import com.attornatus.gerenciamentopessoas.entities.Endereco;
 import com.attornatus.gerenciamentopessoas.entities.Pessoa;
 
 public class PessoaDTO implements Serializable {
@@ -11,6 +15,8 @@ public class PessoaDTO implements Serializable {
 	private Long id;
 	private String nome;
 	private LocalDate dataNascimento;
+	
+	private List<EnderecoDTO> enderecos = new ArrayList<>();
 	
 	public PessoaDTO() {
 	}
@@ -26,6 +32,11 @@ public class PessoaDTO implements Serializable {
 		this.id = entity.getId();
 		this.nome = entity.getNome();
 		this.dataNascimento = entity.getDataNascimento();
+	}
+	
+	public PessoaDTO(Pessoa entity, Set<Endereco> enderecos) {
+		this(entity);
+		enderecos.forEach(endereco -> this.enderecos.add(new EnderecoDTO(endereco)));
 	}
 
 	public Long getId() {
@@ -50,6 +61,14 @@ public class PessoaDTO implements Serializable {
 
 	public void setDataNascimento(LocalDate dataNascimento) {
 		this.dataNascimento = dataNascimento;
+	}
+
+	public List<EnderecoDTO> getEnderecos() {
+		return enderecos;
+	}
+
+	public void setEnderecos(List<EnderecoDTO> enderecos) {
+		this.enderecos = enderecos;
 	}
 	
 }
