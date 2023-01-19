@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Set;
 
 import com.attornatus.gerenciamentopessoas.entities.Address;
-import com.attornatus.gerenciamentopessoas.entities.Pessoa;
+import com.attornatus.gerenciamentopessoas.entities.Person;
 
 public class PessoaDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -28,13 +28,13 @@ public class PessoaDTO implements Serializable {
 	}
 	
 	
-	public PessoaDTO(Pessoa entity) {
+	public PessoaDTO(Person entity) {
 		this.id = entity.getId();
 		this.nome = entity.getNome();
 		this.dataNascimento = entity.getDataNascimento();
 	}
 	
-	public PessoaDTO(Pessoa entity, Set<Address> enderecos) {
+	public PessoaDTO(Person entity, Set<Address> enderecos) {
 		this(entity);
 		enderecos.forEach(endereco -> this.enderecos.add(new AddressDTO(endereco)));
 	}

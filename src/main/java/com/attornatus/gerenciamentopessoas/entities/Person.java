@@ -2,9 +2,9 @@ package com.attornatus.gerenciamentopessoas.entities;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -13,34 +13,41 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "tb_pessoa")
-public class Pessoa implements Serializable {
+@Table(name = "tb_person")
+public class Person implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	private String nome;
+	private String name;
 	
 	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	@Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
-	private LocalDate dataNascimento;
+	private LocalDate birthDate;
 	
-	@OneToMany(mappedBy = "pessoa")
-	private List<Address> enderecos = new ArrayList<>();
+	@ManyToMany
+	@JoinTable(
+			name = "tb_person_address",
+			joinColumns = @JoinColumn(name = "person_id"),
+			inverseJoinColumns = @JoinColumn(name = "address_id")
+			)
+	private Set<Address> address = new HashSet<>();
 
-	public Pessoa() {
+	public Person() {
 	}
 
-	public Pessoa(Long id, String nome, LocalDate dataNascimento) {
+	public Person(Long id, String name, LocalDate birthDate) {
 		this.id = id;
-		this.nome = nome;
-		this.dataNascimento = dataNascimento;
+		this.name = name;
+		this.birthDate = birthDate;
 	}
 
 	public Long getId() {
@@ -51,24 +58,24 @@ public class Pessoa implements Serializable {
 		this.id = id;
 	}
 
-	public String getNome() {
-		return nome;
+	public String getName() {
+		return name;
 	}
 
-	public void setNome(String nome) {
-		this.nome = nome;
+	public void setName(String name) {
+		this.name = name;
 	}
 
-	public LocalDate getDataNascimento() {
-		return dataNascimento;
+	public LocalDate getBirthDate() {
+		return birthDate;
 	}
 
-	public void setDataNascimento(LocalDate dataNascimento) {
-		this.dataNascimento = dataNascimento;
+	public void setBirthDate(LocalDate birthDate) {
+		this.birthDate = birthDate;
 	}
-
-	public List<Address> getEnderecos() {
-		return enderecos;
+	
+	public Set<Address> getAddress() {
+		return address;
 	}
 
 	@Override
@@ -84,7 +91,7 @@ public class Pessoa implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Pessoa other = (Pessoa) obj;
+		Person other = (Person) obj;
 		return Objects.equals(id, other.id);
 	}
 	
