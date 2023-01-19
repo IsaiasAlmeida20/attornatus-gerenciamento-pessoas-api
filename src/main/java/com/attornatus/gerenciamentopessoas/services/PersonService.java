@@ -14,13 +14,13 @@ import com.attornatus.gerenciamentopessoas.repositories.AddressRepository;
 import com.attornatus.gerenciamentopessoas.repositories.PersonRepository;
 
 @Service
-public class PessoaService {
+public class PersonService {
 
 	@Autowired
 	private PersonRepository pessoaRepository;
 	
 	@Autowired
-	private AddressRepository enderecoRepository; 
+	private AddressRepository addressRepository; 
 	
 
 	@Transactional
@@ -32,22 +32,19 @@ public class PessoaService {
 	}
 	
 	
-	
 	@Transactional(readOnly = true)
 	public Page<PersonDTO> findAllPaged(Pageable pageable) {
 		Page<Person> list = pessoaRepository.findAll(pageable);
 		return list.map(x -> new PersonDTO(x));
 	}
 	
-	
-	
 	private void copyDtoToEntity(PersonDTO dto, Person entity) {
-		entity.setNome(dto.getNome());
-		entity.setDataNascimento(dto.getDataNascimento());
-		entity.getEnderecos().clear();
-		for (AddressDTO enderecoDTO : dto.getEnderecos()) {
-			Address endereco = enderecoRepository.getReferenceById(enderecoDTO.getId());
-			entity.getEnderecos().add(endereco);
+		entity.setName(dto.getName());
+		entity.setBirthDate(dto.getBirthDate());
+		entity.getAdresses().clear();
+		for (AddressDTO addressDTO : dto.getAdresses()) {
+			Address address = addressRepository.getReferenceById(addressDTO.getId());
+			entity.getAdresses().add(address);
 		}
 		
 	}

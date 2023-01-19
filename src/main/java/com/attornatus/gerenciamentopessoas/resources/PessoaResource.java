@@ -14,14 +14,14 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.attornatus.gerenciamentopessoas.dto.PersonDTO;
-import com.attornatus.gerenciamentopessoas.services.PessoaService;
+import com.attornatus.gerenciamentopessoas.services.PersonService;
 
 @RestController
 @RequestMapping(value = "/pessoas")
 public class PessoaResource {
 	
 	@Autowired
-	private PessoaService service;
+	private PersonService service;
 	
 	@GetMapping
 	public ResponseEntity<Page<PersonDTO>> findAll(Pageable pageable) {
