@@ -6,7 +6,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.attornatus.gerenciamentopessoas.dto.EnderecoDTO;
+import com.attornatus.gerenciamentopessoas.dto.AddressDTO;
 import com.attornatus.gerenciamentopessoas.entities.Address;
 import com.attornatus.gerenciamentopessoas.repositories.EnderecoRepository;
 
@@ -17,8 +17,8 @@ public class EnderecoService {
 	private EnderecoRepository repository;
 	
 	@Transactional(readOnly = true)
-	public Page<EnderecoDTO> findAllPaged(Pageable pageable) {
+	public Page<AddressDTO> findAllPaged(Pageable pageable) {
 		Page<Address> list = repository.findAll(pageable);
-		return list.map(x -> new EnderecoDTO(x));
+		return list.map(x -> new AddressDTO(x));
 	}
 }

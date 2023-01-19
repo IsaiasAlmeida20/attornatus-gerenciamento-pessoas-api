@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.attornatus.gerenciamentopessoas.dto.EnderecoDTO;
+import com.attornatus.gerenciamentopessoas.dto.AddressDTO;
 import com.attornatus.gerenciamentopessoas.services.EnderecoService;
 
 @RestController
@@ -19,8 +19,8 @@ public class EnderecoResource {
 	private EnderecoService service;
 	
 	@GetMapping
-	public ResponseEntity<Page<EnderecoDTO>> findAll(Pageable pageable) {
-		Page<EnderecoDTO> list = service.findAllPaged(pageable);
+	public ResponseEntity<Page<AddressDTO>> findAll(Pageable pageable) {
+		Page<AddressDTO> list = service.findAllPaged(pageable);
 		return ResponseEntity.ok().body(list);
 	}
 

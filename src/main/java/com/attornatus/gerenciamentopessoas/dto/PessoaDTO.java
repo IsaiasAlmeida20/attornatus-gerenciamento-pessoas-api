@@ -16,7 +16,7 @@ public class PessoaDTO implements Serializable {
 	private String nome;
 	private LocalDate dataNascimento;
 	
-	private List<EnderecoDTO> enderecos = new ArrayList<>();
+	private List<AddressDTO> enderecos = new ArrayList<>();
 	
 	public PessoaDTO() {
 	}
@@ -36,7 +36,7 @@ public class PessoaDTO implements Serializable {
 	
 	public PessoaDTO(Pessoa entity, Set<Address> enderecos) {
 		this(entity);
-		enderecos.forEach(endereco -> this.enderecos.add(new EnderecoDTO(endereco)));
+		enderecos.forEach(endereco -> this.enderecos.add(new AddressDTO(endereco)));
 	}
 
 	public Long getId() {
@@ -63,11 +63,11 @@ public class PessoaDTO implements Serializable {
 		this.dataNascimento = dataNascimento;
 	}
 
-	public List<EnderecoDTO> getEnderecos() {
+	public List<AddressDTO> getEnderecos() {
 		return enderecos;
 	}
 
-	public void setEnderecos(List<EnderecoDTO> enderecos) {
+	public void setEnderecos(List<AddressDTO> enderecos) {
 		this.enderecos = enderecos;
 	}
 	

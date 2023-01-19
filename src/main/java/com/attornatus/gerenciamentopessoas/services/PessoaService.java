@@ -6,7 +6,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.attornatus.gerenciamentopessoas.dto.EnderecoDTO;
+import com.attornatus.gerenciamentopessoas.dto.AddressDTO;
 import com.attornatus.gerenciamentopessoas.dto.PessoaDTO;
 import com.attornatus.gerenciamentopessoas.entities.Address;
 import com.attornatus.gerenciamentopessoas.entities.Pessoa;
@@ -45,7 +45,7 @@ public class PessoaService {
 		entity.setNome(dto.getNome());
 		entity.setDataNascimento(dto.getDataNascimento());
 		entity.getEnderecos().clear();
-		for (EnderecoDTO enderecoDTO : dto.getEnderecos()) {
+		for (AddressDTO enderecoDTO : dto.getEnderecos()) {
 			Address endereco = enderecoRepository.getReferenceById(enderecoDTO.getId());
 			entity.getEnderecos().add(endereco);
 		}
