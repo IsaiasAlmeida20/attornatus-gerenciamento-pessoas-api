@@ -16,6 +16,17 @@ public class AddressService {
 	@Autowired
 	private AddressRepository repository;
 	
+	@Transactional
+	public AddressDTO createAddres(AddressDTO dto) {
+		Address entity = new Address();
+		entity.setPublicPlace(dto.getPublicPlace());
+		entity.setZipCode(dto.getZipCode());
+		entity.setNumber(dto.getNumber());
+		entity.setCity(dto.getCity());
+		entity = repository.save(entity);
+		return new AddressDTO(entity);
+	}
+	
 	@Transactional(readOnly = true)
 	public Page<AddressDTO> findAllPaged(Pageable pageable) {
 		Page<Address> list = repository.findAll(pageable);
