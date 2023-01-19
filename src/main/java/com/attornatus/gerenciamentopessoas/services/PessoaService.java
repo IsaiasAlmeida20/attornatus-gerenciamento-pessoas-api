@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.attornatus.gerenciamentopessoas.dto.EnderecoDTO;
 import com.attornatus.gerenciamentopessoas.dto.PessoaDTO;
-import com.attornatus.gerenciamentopessoas.entities.Endereco;
+import com.attornatus.gerenciamentopessoas.entities.Address;
 import com.attornatus.gerenciamentopessoas.entities.Pessoa;
 import com.attornatus.gerenciamentopessoas.repositories.EnderecoRepository;
 import com.attornatus.gerenciamentopessoas.repositories.PessoaRepository;
@@ -31,21 +31,22 @@ public class PessoaService {
 		return new PessoaDTO(entity);
 	}
 	
+	
+	
 	@Transactional(readOnly = true)
 	public Page<PessoaDTO> findAllPaged(Pageable pageable) {
 		Page<Pessoa> list = pessoaRepository.findAll(pageable);
 		return list.map(x -> new PessoaDTO(x));
 	}
 	
+	
+	
 	private void copyDtoToEntity(PessoaDTO dto, Pessoa entity) {
-		
 		entity.setNome(dto.getNome());
 		entity.setDataNascimento(dto.getDataNascimento());
-		
-		
 		entity.getEnderecos().clear();
 		for (EnderecoDTO enderecoDTO : dto.getEnderecos()) {
-			Endereco endereco = enderecoRepository.getReferenceById(enderecoDTO.getId());
+			Address endereco = enderecoRepository.getReferenceById(enderecoDTO.getId());
 			entity.getEnderecos().add(endereco);
 		}
 		

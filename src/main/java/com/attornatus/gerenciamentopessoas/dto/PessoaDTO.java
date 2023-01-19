@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import com.attornatus.gerenciamentopessoas.entities.Endereco;
+import com.attornatus.gerenciamentopessoas.entities.Address;
 import com.attornatus.gerenciamentopessoas.entities.Pessoa;
 
 public class PessoaDTO implements Serializable {
@@ -34,7 +34,7 @@ public class PessoaDTO implements Serializable {
 		this.dataNascimento = entity.getDataNascimento();
 	}
 	
-	public PessoaDTO(Pessoa entity, Set<Endereco> enderecos) {
+	public PessoaDTO(Pessoa entity, Set<Address> enderecos) {
 		this(entity);
 		enderecos.forEach(endereco -> this.enderecos.add(new EnderecoDTO(endereco)));
 	}

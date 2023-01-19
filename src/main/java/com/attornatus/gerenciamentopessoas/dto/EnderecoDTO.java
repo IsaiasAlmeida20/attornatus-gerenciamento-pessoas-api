@@ -2,7 +2,7 @@ package com.attornatus.gerenciamentopessoas.dto;
 
 import java.io.Serializable;
 
-import com.attornatus.gerenciamentopessoas.entities.Endereco;
+import com.attornatus.gerenciamentopessoas.entities.Address;
 
 public class EnderecoDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -26,7 +26,7 @@ public class EnderecoDTO implements Serializable {
 		this.pessoaId = pessoaId;
 	}
 	
-	public EnderecoDTO(Endereco entity) {
+	public EnderecoDTO(Address entity) {
 		this.id = entity.getId();
 		this.logradouro = entity.getLogradouro();
 		this.cep = entity.getCep();

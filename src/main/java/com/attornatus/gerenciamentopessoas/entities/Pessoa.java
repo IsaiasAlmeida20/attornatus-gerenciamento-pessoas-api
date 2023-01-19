@@ -25,15 +25,14 @@ public class Pessoa implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@Column(nullable = false)
 	private String nome;
 	
-	@Column(nullable = false)
 	@DateTimeFormat(pattern = "dd/MM/yyyy")
+	@Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
 	private LocalDate dataNascimento;
 	
 	@OneToMany(mappedBy = "pessoa")
-	private List<Endereco> enderecos = new ArrayList<>();
+	private List<Address> enderecos = new ArrayList<>();
 
 	public Pessoa() {
 	}
@@ -68,7 +67,7 @@ public class Pessoa implements Serializable {
 		this.dataNascimento = dataNascimento;
 	}
 
-	public List<Endereco> getEnderecos() {
+	public List<Address> getEnderecos() {
 		return enderecos;
 	}
 
