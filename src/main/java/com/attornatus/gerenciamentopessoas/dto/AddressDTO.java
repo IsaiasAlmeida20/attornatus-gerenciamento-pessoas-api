@@ -40,11 +40,11 @@ public class AddressDTO implements Serializable {
 		this.id = id;
 	}
 
-	public String getLogradouro() {
+	public String getPublicPlace() {
 		return publicPlace;
 	}
 
-	public void setLogradouro(String publicPlace) {
+	public void setPublicPlace(String publicPlace) {
 		this.publicPlace = publicPlace;
 	}
 

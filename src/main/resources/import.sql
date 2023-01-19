@@ -6,3 +6,4 @@ insert into tb_addres (public_place, zip_code, number, city) values ('Rua B', 11
 
 INSERT INTO tb_person_address (person_id, address_id) VALUES (1, 2);
 INSERT INTO tb_person_address (person_id, address_id) VALUES (2, 2);
+INSERT INTO tb_person_address (person_id, address_id) VALUES (2, 1);

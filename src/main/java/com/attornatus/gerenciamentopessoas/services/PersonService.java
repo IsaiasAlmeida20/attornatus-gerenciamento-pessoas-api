@@ -35,7 +35,7 @@ public class PersonService {
 	@Transactional(readOnly = true)
 	public Page<PersonDTO> findAllPaged(Pageable pageable) {
 		Page<Person> list = pessoaRepository.findAll(pageable);
-		return list.map(x -> new PersonDTO(x));
+		return list.map(x -> new PersonDTO(x, x.getAdresses()));
 	}
 	
 	private void copyDtoToEntity(PersonDTO dto, Person entity) {
