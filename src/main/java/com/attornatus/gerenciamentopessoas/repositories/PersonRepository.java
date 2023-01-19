@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.attornatus.gerenciamentopessoas.entities.Person;
 
 @Repository
-public interface PessoaRepository extends JpaRepository<Person, Long> {
+public interface PersonRepository extends JpaRepository<Person, Long> {
 
 }

@@ -11,13 +11,13 @@ import com.attornatus.gerenciamentopessoas.dto.PersonDTO;
 import com.attornatus.gerenciamentopessoas.entities.Address;
 import com.attornatus.gerenciamentopessoas.entities.Person;
 import com.attornatus.gerenciamentopessoas.repositories.AddressRepository;
-import com.attornatus.gerenciamentopessoas.repositories.PessoaRepository;
+import com.attornatus.gerenciamentopessoas.repositories.PersonRepository;
 
 @Service
 public class PessoaService {
 
 	@Autowired
-	private PessoaRepository pessoaRepository;
+	private PersonRepository pessoaRepository;
 	
 	@Autowired
 	private AddressRepository enderecoRepository; 
