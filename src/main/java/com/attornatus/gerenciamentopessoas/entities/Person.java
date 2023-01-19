@@ -39,7 +39,7 @@ public class Person implements Serializable {
 			joinColumns = @JoinColumn(name = "person_id"),
 			inverseJoinColumns = @JoinColumn(name = "address_id")
 			)
-	private Set<Address> address = new HashSet<>();
+	private Set<Address> adresses = new HashSet<>();
 
 	public Person() {
 	}
@@ -74,8 +74,8 @@ public class Person implements Serializable {
 		this.birthDate = birthDate;
 	}
 	
-	public Set<Address> getAddress() {
-		return address;
+	public Set<Address> getAdresses() {
+		return adresses;
 	}
 
 	@Override

@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.attornatus.gerenciamentopessoas.dto.AddressDTO;
-import com.attornatus.gerenciamentopessoas.dto.PessoaDTO;
+import com.attornatus.gerenciamentopessoas.dto.PersonDTO;
 import com.attornatus.gerenciamentopessoas.entities.Address;
 import com.attornatus.gerenciamentopessoas.entities.Person;
 import com.attornatus.gerenciamentopessoas.repositories.AddressRepository;
@@ -24,24 +24,24 @@ public class PessoaService {
 	
 
 	@Transactional
-	public PessoaDTO insert(PessoaDTO dto) {
+	public PersonDTO insert(PersonDTO dto) {
 		Person entity = new Person();
 		copyDtoToEntity(dto, entity);
 		entity = pessoaRepository.save(entity);
-		return new PessoaDTO(entity);
+		return new PersonDTO(entity);
 	}
 	
 	
 	
 	@Transactional(readOnly = true)
-	public Page<PessoaDTO> findAllPaged(Pageable pageable) {
+	public Page<PersonDTO> findAllPaged(Pageable pageable) {
 		Page<Person> list = pessoaRepository.findAll(pageable);
-		return list.map(x -> new PessoaDTO(x));
+		return list.map(x -> new PersonDTO(x));
 	}
 	
 	
 	
-	private void copyDtoToEntity(PessoaDTO dto, Person entity) {
+	private void copyDtoToEntity(PersonDTO dto, Person entity) {
 		entity.setNome(dto.getNome());
 		entity.setDataNascimento(dto.getDataNascimento());
 		entity.getEnderecos().clear();

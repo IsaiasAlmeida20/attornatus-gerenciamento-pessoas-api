@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.attornatus.gerenciamentopessoas.dto.PessoaDTO;
+import com.attornatus.gerenciamentopessoas.dto.PersonDTO;
 import com.attornatus.gerenciamentopessoas.services.PessoaService;
 
 @RestController
@@ -24,14 +24,14 @@ public class PessoaResource {
 	private PessoaService service;
 	
 	@GetMapping
-	public ResponseEntity<Page<PessoaDTO>> findAll(Pageable pageable) {
-		Page<PessoaDTO> list = service.findAllPaged(pageable);
+	public ResponseEntity<Page<PersonDTO>> findAll(Pageable pageable) {
+		Page<PersonDTO> list = service.findAllPaged(pageable);
 		return ResponseEntity.ok().body(list);
 	}
 	
 
 	@PostMapping
-	public ResponseEntity<PessoaDTO> insert(@RequestBody PessoaDTO dto) {
+	public ResponseEntity<PersonDTO> insert(@RequestBody PersonDTO dto) {
 		dto = service.insert(dto);
 		URI uri = ServletUriComponentsBuilder
 				.fromCurrentRequest()
