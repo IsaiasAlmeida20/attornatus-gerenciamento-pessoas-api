@@ -12,8 +12,8 @@ import com.attornatus.gerenciamentopessoas.dto.AddressDTO;
 import com.attornatus.gerenciamentopessoas.services.AddressService;
 
 @RestController
-@RequestMapping(value = "/enderecos")
-public class EnderecoResource {
+@RequestMapping(value = "/address")
+public class AddressResource {
 	
 	@Autowired
 	private AddressService service;
