@@ -11,7 +11,7 @@ import com.attornatus.gerenciamentopessoas.entities.Address;
 import com.attornatus.gerenciamentopessoas.repositories.AddressRepository;
 
 @Service
-public class EnderecoService {
+public class AddressService {
 
 	@Autowired
 	private AddressRepository repository;

@@ -9,14 +9,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.attornatus.gerenciamentopessoas.dto.AddressDTO;
-import com.attornatus.gerenciamentopessoas.services.EnderecoService;
+import com.attornatus.gerenciamentopessoas.services.AddressService;
 
 @RestController
 @RequestMapping(value = "/enderecos")
 public class EnderecoResource {
 	
 	@Autowired
-	private EnderecoService service;
+	private AddressService service;
 	
 	@GetMapping
 	public ResponseEntity<Page<AddressDTO>> findAll(Pageable pageable) {
