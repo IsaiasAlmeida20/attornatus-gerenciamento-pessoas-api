@@ -8,13 +8,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.attornatus.gerenciamentopessoas.dto.AddressDTO;
 import com.attornatus.gerenciamentopessoas.entities.Address;
-import com.attornatus.gerenciamentopessoas.repositories.EnderecoRepository;
+import com.attornatus.gerenciamentopessoas.repositories.AddressRepository;
 
 @Service
 public class EnderecoService {
 
 	@Autowired
-	private EnderecoRepository repository;
+	private AddressRepository repository;
 	
 	@Transactional(readOnly = true)
 	public Page<AddressDTO> findAllPaged(Pageable pageable) {

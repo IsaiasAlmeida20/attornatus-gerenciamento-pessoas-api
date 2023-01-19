@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.attornatus.gerenciamentopessoas.entities.Address;
 
 @Repository
-public interface EnderecoRepository extends JpaRepository<Address, Long> {
+public interface AddressRepository extends JpaRepository<Address, Long> {
 
 }

@@ -10,7 +10,7 @@ import com.attornatus.gerenciamentopessoas.dto.AddressDTO;
 import com.attornatus.gerenciamentopessoas.dto.PessoaDTO;
 import com.attornatus.gerenciamentopessoas.entities.Address;
 import com.attornatus.gerenciamentopessoas.entities.Pessoa;
-import com.attornatus.gerenciamentopessoas.repositories.EnderecoRepository;
+import com.attornatus.gerenciamentopessoas.repositories.AddressRepository;
 import com.attornatus.gerenciamentopessoas.repositories.PessoaRepository;
 
 @Service
@@ -20,7 +20,7 @@ public class PessoaService {
 	private PessoaRepository pessoaRepository;
 	
 	@Autowired
-	private EnderecoRepository enderecoRepository; 
+	private AddressRepository enderecoRepository; 
 	
 
 	@Transactional
