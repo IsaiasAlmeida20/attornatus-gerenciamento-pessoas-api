@@ -12,7 +12,7 @@ import com.attornatus.gerenciamentopessoas.dto.AddressDTO;
 import com.attornatus.gerenciamentopessoas.services.AddressService;
 
 @RestController
-@RequestMapping(value = "/address")
+@RequestMapping(value = "/adresses")
 public class AddressResource {
 	
 	@Autowired

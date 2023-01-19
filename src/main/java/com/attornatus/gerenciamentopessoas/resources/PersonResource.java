@@ -17,8 +17,8 @@ import com.attornatus.gerenciamentopessoas.dto.PersonDTO;
 import com.attornatus.gerenciamentopessoas.services.PersonService;
 
 @RestController
-@RequestMapping(value = "/pessoas")
-public class PessoaResource {
+@RequestMapping(value = "/person")
+public class PersonResource {
 	
 	@Autowired
 	private PersonService service;
