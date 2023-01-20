@@ -40,8 +40,8 @@ public class PersonService {
 	public PersonDTO update(Long id, PersonDTO dto) {
 		try {
 			Person entity = personRepository.getReferenceById(id);
-			Address address = new Address();
-			copyDtoToEntity(dto, entity, address);
+			entity.setName(dto.getName());
+			entity.setBirthDate(dto.getBirthDate());
 			entity = personRepository.save(entity);
 			return new PersonDTO(entity);
 		} catch (EntityNotFoundException e) {
