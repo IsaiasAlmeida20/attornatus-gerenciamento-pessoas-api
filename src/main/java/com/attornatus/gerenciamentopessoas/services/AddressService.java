@@ -12,6 +12,9 @@ import com.attornatus.gerenciamentopessoas.entities.Address;
 import com.attornatus.gerenciamentopessoas.entities.Person;
 import com.attornatus.gerenciamentopessoas.repositories.AddressRepository;
 import com.attornatus.gerenciamentopessoas.repositories.PersonRepository;
+import com.attornatus.gerenciamentopessoas.services.exceptions.ResourceNotFoundException;
+
+import jakarta.persistence.EntityNotFoundException;
 
 @Service
 public class AddressService {
@@ -39,7 +42,15 @@ public class AddressService {
 		return new AddressDTO(address);
 	}
 	
-	
+	@Transactional(readOnly = true)
+	public List<AddressDTO> findById(Long id) {
+		try {
+			Person person = personRepository.getReferenceById(id);
+			return person.getAdresses().stream().map(address -> new AddressDTO(address)).collect(Collectors.toList());
+		} catch (EntityNotFoundException e) {
+			throw new ResourceNotFoundException("Id not found " + id);
+		}
+	}
 	
 	@Transactional(readOnly = true)
 	public List<AddressDTO> findAll() {

@@ -29,6 +29,12 @@ public class AddressResource {
 		return ResponseEntity.ok().body(list);
 	}
 	
+	@GetMapping(value = "/{id}")
+	public ResponseEntity<List<AddressDTO>> findAllAddressPerson(@PathVariable Long id) {
+		List<AddressDTO> list = service.findById(id);
+		return ResponseEntity.ok().body(list);
+	}
+	
 	@PostMapping(value = "/{id}")
 	public ResponseEntity<AddressDTO> insert(@PathVariable Long id,@RequestBody AddressDTO dto) {
 		dto = service.createAddres(id, dto);
