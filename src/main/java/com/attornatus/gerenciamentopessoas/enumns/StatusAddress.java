@@ -1,4 +1,4 @@
-package com.attornatus.gerenciamentopessoas;
+package com.attornatus.gerenciamentopessoas.enumns;
 
 public enum StatusAddress {
 	
