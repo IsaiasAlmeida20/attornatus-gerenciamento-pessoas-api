@@ -53,4 +53,5 @@ public class PersonResource {
 		Page<PersonDTO> list = service.findAllPaged(pageable);
 		return ResponseEntity.ok().body(list);
 	}
+	
 }

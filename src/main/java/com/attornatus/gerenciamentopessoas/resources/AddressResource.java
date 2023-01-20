@@ -1,12 +1,12 @@
 package com.attornatus.gerenciamentopessoas.resources;
 
 import java.net.URI;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,14 +24,14 @@ public class AddressResource {
 	private AddressService service;
 	
 	@GetMapping
-	public ResponseEntity<Page<AddressDTO>> findAll(Pageable pageable) {
-		Page<AddressDTO> list = service.findAllPaged(pageable);
+	public ResponseEntity<List<AddressDTO>> findAll() {
+		List<AddressDTO> list = service.findAll();
 		return ResponseEntity.ok().body(list);
 	}
 	
-	@PostMapping
-	public ResponseEntity<AddressDTO> insert(@RequestBody AddressDTO dto) {
-		dto = service.createAddres(dto);
+	@PostMapping(value = "/{id}")
+	public ResponseEntity<AddressDTO> insert(@PathVariable Long id,@RequestBody AddressDTO dto) {
+		dto = service.createAddres(id, dto);
 		URI uri = ServletUriComponentsBuilder
 				.fromCurrentRequest()
 				.path("/{id}")

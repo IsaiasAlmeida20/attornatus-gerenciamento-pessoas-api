@@ -1,35 +1,49 @@
 package com.attornatus.gerenciamentopessoas.services;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.attornatus.gerenciamentopessoas.dto.AddressDTO;
 import com.attornatus.gerenciamentopessoas.entities.Address;
+import com.attornatus.gerenciamentopessoas.entities.Person;
 import com.attornatus.gerenciamentopessoas.repositories.AddressRepository;
+import com.attornatus.gerenciamentopessoas.repositories.PersonRepository;
 
 @Service
 public class AddressService {
 
 	@Autowired
-	private AddressRepository repository;
+	private AddressRepository addressRepository; 
+	
+	@Autowired
+	private PersonRepository personRepository;
 	
 	@Transactional
-	public AddressDTO createAddres(AddressDTO dto) {
-		Address entity = new Address();
-		entity.setPublicPlace(dto.getPublicPlace());
-		entity.setZipCode(dto.getZipCode());
-		entity.setNumber(dto.getNumber());
-		entity.setCity(dto.getCity());
-		entity = repository.save(entity);
-		return new AddressDTO(entity);
+	public AddressDTO createAddres(Long id, AddressDTO dto) {
+		Person person = personRepository.getReferenceById(id);
+		Address address= new Address();
+		
+		address.setPublicPlace(dto.getPublicPlace());
+		address.setZipCode(dto.getZipCode());
+		address.setNumber(dto.getNumber());
+		address.setCity(dto.getCity());
+		
+		address = addressRepository.save(address);
+		
+		person.getAdresses().add(address);
+		
+		return new AddressDTO(address);
 	}
 	
+	
+	
 	@Transactional(readOnly = true)
-	public Page<AddressDTO> findAllPaged(Pageable pageable) {
-		Page<Address> list = repository.findAll(pageable);
-		return list.map(x -> new AddressDTO(x));
+	public List<AddressDTO> findAll() {
+		List<Address> list = addressRepository.findAll();
+		return list.stream().map(x -> new AddressDTO(x)).collect(Collectors.toList());
 	}
 }
