@@ -3,6 +3,7 @@ package com.attornatus.gerenciamentopessoas.dto;
 import java.io.Serializable;
 
 import com.attornatus.gerenciamentopessoas.entities.Address;
+import com.attornatus.gerenciamentopessoas.enumns.StatusAddress;
 
 public class AddressDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -12,16 +13,18 @@ public class AddressDTO implements Serializable {
 	private Long zipCode;
 	private Integer number;
 	private String city;
+	private StatusAddress status;
 	
 	public AddressDTO() {
 	}
 
-	public AddressDTO(Long id, String publicPlace, Long zipCode, Integer number, String city) {
+	public AddressDTO(Long id, String publicPlace, Long zipCode, Integer number, String city, StatusAddress status) {
 		this.id = id;
 		this.publicPlace = publicPlace;
 		this.zipCode = zipCode;
 		this.number = number;
 		this.city = city;
+		this.status = status;
 	}
 	
 	public AddressDTO(Address entity) {
@@ -30,6 +33,7 @@ public class AddressDTO implements Serializable {
 		this.zipCode = entity.getZipCode();
 		this.number = entity.getNumber();
 		this.city = entity.getCity();
+		this.status = entity.getStatus();
 	}
 
 	public Long getId() {
@@ -72,4 +76,12 @@ public class AddressDTO implements Serializable {
 		this.city = city;
 	}
 
+	public StatusAddress getStatus() {
+		return status;
+	}
+
+	public void setStatus(StatusAddress status) {
+		this.status = status;
+	}
+	
 }
