@@ -3,8 +3,12 @@ package com.attornatus.gerenciamentopessoas.entities;
 import java.io.Serializable;
 import java.util.Objects;
 
+import com.attornatus.gerenciamentopessoas.enumns.StatusAddress;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -31,15 +35,20 @@ public class Address implements Serializable {
 	@Column(nullable = false)
 	private String city;
 	
+	@Column(nullable = false)
+	@Enumerated(EnumType.STRING)
+	private StatusAddress status;
+	
 	public Address() {
 	}
 
-	public Address(Long id, String publicPlace, Long zipCode, Integer number, String city) {
+	public Address(Long id, String publicPlace, Long zipCode, Integer number, String city, StatusAddress status) {
 		this.id = id;
 		this.publicPlace = publicPlace;
 		this.zipCode = zipCode;
 		this.number = number;
 		this.city = city;
+		this.status = status;
 	}
 
 	public Long getId() {
@@ -80,6 +89,14 @@ public class Address implements Serializable {
 
 	public void setCity(String city) {
 		this.city = city;
+	}
+	
+	public StatusAddress getStatus() {
+		return status;
+	}
+
+	public void setStatus(StatusAddress status) {
+		this.status = status;
 	}
 
 	@Override
