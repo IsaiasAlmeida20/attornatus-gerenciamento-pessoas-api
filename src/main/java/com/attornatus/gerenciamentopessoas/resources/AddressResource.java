@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,23 +22,23 @@ import com.attornatus.gerenciamentopessoas.services.AddressService;
 public class AddressResource {
 	
 	@Autowired
-	private AddressService service;
+	private AddressService addressService;
 	
 	@GetMapping
 	public ResponseEntity<List<AddressDTO>> findAll() {
-		List<AddressDTO> list = service.findAll();
+		List<AddressDTO> list = addressService.findAll();
 		return ResponseEntity.ok().body(list);
 	}
 	
 	@GetMapping(value = "/{id}")
 	public ResponseEntity<List<AddressDTO>> findAllAddressPerson(@PathVariable Long id) {
-		List<AddressDTO> list = service.findById(id);
+		List<AddressDTO> list = addressService.findById(id);
 		return ResponseEntity.ok().body(list);
 	}
 	
 	@PostMapping(value = "/{id}")
 	public ResponseEntity<AddressDTO> insert(@PathVariable Long id,@RequestBody AddressDTO dto) {
-		dto = service.createAddres(id, dto);
+		dto = addressService.createAddres(id, dto);
 		URI uri = ServletUriComponentsBuilder
 				.fromCurrentRequest()
 				.path("/{id}")
@@ -45,5 +46,12 @@ public class AddressResource {
 				.toUri();
 		return ResponseEntity.created(uri).body(dto);
 	}
+	
+	@PutMapping(value = "/{id}")
+	public ResponseEntity<AddressDTO> changePrimaryAddress(@PathVariable Long id) {
+		AddressDTO dto = addressService.changePrimaryAddress(id);
+		return ResponseEntity.ok().body(dto);
+	}
+	
 
 }

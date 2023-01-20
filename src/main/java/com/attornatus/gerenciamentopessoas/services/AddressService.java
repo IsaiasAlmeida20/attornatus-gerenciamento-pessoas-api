@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.attornatus.gerenciamentopessoas.dto.AddressDTO;
 import com.attornatus.gerenciamentopessoas.entities.Address;
 import com.attornatus.gerenciamentopessoas.entities.Person;
+import com.attornatus.gerenciamentopessoas.enumns.StatusAddress;
 import com.attornatus.gerenciamentopessoas.repositories.AddressRepository;
 import com.attornatus.gerenciamentopessoas.repositories.PersonRepository;
 import com.attornatus.gerenciamentopessoas.services.exceptions.ResourceNotFoundException;
@@ -28,7 +29,7 @@ public class AddressService {
 	@Transactional
 	public AddressDTO createAddres(Long id, AddressDTO dto) {
 		Person person = personRepository.getReferenceById(id);
-		Address address= new Address();
+		Address address = new Address();
 		
 		address.setPublicPlace(dto.getPublicPlace());
 		address.setZipCode(dto.getZipCode());
@@ -47,6 +48,18 @@ public class AddressService {
 		try {
 			Person person = personRepository.getReferenceById(id);
 			return person.getAdresses().stream().map(address -> new AddressDTO(address)).collect(Collectors.toList());
+		} catch (EntityNotFoundException e) {
+			throw new ResourceNotFoundException("Id not found " + id);
+		}
+	}
+	
+	@Transactional
+	public AddressDTO changePrimaryAddress(Long id) {
+		try {
+			Address address = addressRepository.getReferenceById(id);
+			address.setStatus(StatusAddress.PRIMARY);
+			address = addressRepository.save(address);
+			return new AddressDTO(address);
 		} catch (EntityNotFoundException e) {
 			throw new ResourceNotFoundException("Id not found " + id);
 		}
