@@ -70,16 +70,17 @@ public class PersonService {
 		entity.getAdresses().clear();
 		for (AddressDTO addressDTO : dto.getAdresses()) {
 			
-			Address createAddres = new Address();
+			Address createAddress = new Address();
 			
-			createAddres.setPublicPlace(addressDTO.getPublicPlace());
-			createAddres.setZipCode(addressDTO.getZipCode());
-			createAddres.setNumber(addressDTO.getNumber());
-			createAddres.setCity(addressDTO.getCity());
+			createAddress.setPublicPlace(addressDTO.getPublicPlace());
+			createAddress.setZipCode(addressDTO.getZipCode());
+			createAddress.setNumber(addressDTO.getNumber());
+			createAddress.setCity(addressDTO.getCity());
+			createAddress.setStatus(addressDTO.getStatus());
 			
-			createAddres = addressRepository.save(createAddres);
+			createAddress = addressRepository.save(createAddress);
 			
-			entity.getAdresses().add(createAddres);
+			entity.getAdresses().add(createAddress);
 		}
 		
 	}
