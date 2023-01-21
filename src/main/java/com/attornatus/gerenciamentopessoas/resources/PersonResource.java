@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.attornatus.gerenciamentopessoas.dto.AddressDTO;
 import com.attornatus.gerenciamentopessoas.dto.PersonDTO;
 import com.attornatus.gerenciamentopessoas.services.PersonService;
 
@@ -23,11 +24,11 @@ import com.attornatus.gerenciamentopessoas.services.PersonService;
 public class PersonResource {
 	
 	@Autowired
-	private PersonService service;
+	private PersonService personService;
 	
 	@PostMapping
 	public ResponseEntity<PersonDTO> createPerson(@RequestBody PersonDTO personDTO) {
-		personDTO = service.create(personDTO);
+		personDTO = personService.create(personDTO);
 		URI uri = ServletUriComponentsBuilder
 				.fromCurrentRequest()
 				.path("/{id}")
@@ -37,21 +38,32 @@ public class PersonResource {
 	}
 	
 	@PutMapping(value = "/{id}")
-	public ResponseEntity<PersonDTO> updatePerson(@PathVariable Long id, @RequestBody PersonDTO dto) {
-		dto = service.update(id, dto);
-		return ResponseEntity.ok().body(dto);
+	public ResponseEntity<PersonDTO> updatePerson(@PathVariable Long id, @RequestBody PersonDTO personDTO) {
+		personDTO = personService.update(id, personDTO);
+		return ResponseEntity.ok().body(personDTO);
 	}
 	
 	@GetMapping(value = "/{id}")
 	public ResponseEntity<PersonDTO> findPersonById(@PathVariable Long id) {
-		PersonDTO dto = service.findById(id);
+		PersonDTO dto = personService.findById(id);
 		return ResponseEntity.ok().body(dto);
 	}
 	
 	@GetMapping
 	public ResponseEntity<Page<PersonDTO>> findAllPerson(Pageable pageable) {
-		Page<PersonDTO> list = service.findAllPaged(pageable);
+		Page<PersonDTO> list = personService.findAllPaged(pageable);
 		return ResponseEntity.ok().body(list);
+	}
+	
+	@PostMapping(value = "/{id}/address")
+	public ResponseEntity<AddressDTO> insert(@PathVariable Long id, @RequestBody AddressDTO addressDTO) {
+		addressDTO = personService.createAddres(id, addressDTO);
+		URI uri = ServletUriComponentsBuilder
+				.fromCurrentRequest()
+				.path("/{id}")
+				.buildAndExpand(addressDTO.getId())
+				.toUri();
+		return ResponseEntity.created(uri).body(addressDTO);
 	}
 	
 }

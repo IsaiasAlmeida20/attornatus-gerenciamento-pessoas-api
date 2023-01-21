@@ -26,23 +26,6 @@ public class AddressService {
 	@Autowired
 	private PersonRepository personRepository;
 	
-	@Transactional
-	public AddressDTO createAddres(Long id, AddressDTO dto) {
-		Person person = personRepository.getReferenceById(id);
-		Address address = new Address();
-		
-		address.setPublicPlace(dto.getPublicPlace());
-		address.setZipCode(dto.getZipCode());
-		address.setNumber(dto.getNumber());
-		address.setCity(dto.getCity());
-		address.setStatus(dto.getStatus());
-		
-		address = addressRepository.save(address);
-		
-		person.getAdresses().add(address);
-		
-		return new AddressDTO(address);
-	}
 	
 	@Transactional(readOnly = true)
 	public List<AddressDTO> findById(Long id) {

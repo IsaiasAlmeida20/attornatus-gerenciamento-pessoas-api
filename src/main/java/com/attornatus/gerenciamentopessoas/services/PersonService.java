@@ -62,6 +62,25 @@ public class PersonService {
 		return list.map(x -> new PersonDTO(x, x.getAdresses()));
 	}
 	
+	@Transactional
+	public AddressDTO createAddres(Long id, AddressDTO dto) {
+		Person person = personRepository.getReferenceById(id);
+		Address address = new Address();
+		
+		address.setPublicPlace(dto.getPublicPlace());
+		address.setZipCode(dto.getZipCode());
+		address.setNumber(dto.getNumber());
+		address.setCity(dto.getCity());
+		address.setStatus(dto.getStatus());
+		
+		address = addressRepository.save(address);
+		
+		person.getAdresses().add(address);
+		
+		return new AddressDTO(address);
+	}
+	
+	
 	private void copyDtoToEntity(PersonDTO dto, Person entity, Address address) {
 		
 		entity.setName(dto.getName());
