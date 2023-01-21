@@ -62,7 +62,7 @@ public class PersonService {
 	@Transactional(readOnly = true)
 	public Page<PersonDTO> findAllPersonPaged(Pageable pageable) {
 		Page<Person> list = personRepository.findAll(pageable);
-		return list.map(person -> new PersonDTO(person, person.getAdresses()));
+		return list.map(person -> new PersonDTO(person));
 	}
 	
 	@Transactional
