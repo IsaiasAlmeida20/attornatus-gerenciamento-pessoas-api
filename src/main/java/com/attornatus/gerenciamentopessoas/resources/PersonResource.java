@@ -73,4 +73,11 @@ public class PersonResource {
 		return ResponseEntity.ok().body(list);
 	}
 	
+	@PutMapping(value = "/{personId}/{addressId}")
+	public ResponseEntity<PersonDTO> changePrimaryAddress(@PathVariable Long personId, @PathVariable Long addressId) {
+		PersonDTO personDTO = personService.changePrimaryAddress(personId, addressId);
+		return ResponseEntity.ok().body(personDTO);
+	}
+	
+	
 }

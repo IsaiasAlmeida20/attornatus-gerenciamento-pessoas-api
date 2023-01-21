@@ -14,6 +14,7 @@ import com.attornatus.gerenciamentopessoas.dto.AddressDTO;
 import com.attornatus.gerenciamentopessoas.dto.PersonDTO;
 import com.attornatus.gerenciamentopessoas.entities.Address;
 import com.attornatus.gerenciamentopessoas.entities.Person;
+import com.attornatus.gerenciamentopessoas.enumns.StatusAddress;
 import com.attornatus.gerenciamentopessoas.repositories.AddressRepository;
 import com.attornatus.gerenciamentopessoas.repositories.PersonRepository;
 import com.attornatus.gerenciamentopessoas.services.exceptions.ResourceNotFoundException;
@@ -30,22 +31,22 @@ public class PersonService {
 	private AddressRepository addressRepository; 
 	
 	@Transactional
-	public PersonDTO createPerson(PersonDTO dto) {
-		Person entity = new Person();
+	public PersonDTO createPerson(PersonDTO personDTO) {
+		Person person = new Person();
 		Address address = new Address();
-		copyDtoToEntity(dto, entity, address);
-		entity = personRepository.save(entity);
-		return new PersonDTO(entity);
+		copyDtoToEntity(personDTO, person, address);
+		person = personRepository.save(person);
+		return new PersonDTO(person);
 	}
 	
 	@Transactional
-	public PersonDTO updatePerson(Long id, PersonDTO dto) {
+	public PersonDTO updatePerson(Long id, PersonDTO personDTO) {
 		try {
-			Person entity = personRepository.getReferenceById(id);
-			entity.setName(dto.getName());
-			entity.setBirthDate(dto.getBirthDate());
-			entity = personRepository.save(entity);
-			return new PersonDTO(entity);
+			Person person = personRepository.getReferenceById(id);
+			person.setName(personDTO.getName());
+			person.setBirthDate(personDTO.getBirthDate());
+			person = personRepository.save(person);
+			return new PersonDTO(person);
 		} catch (EntityNotFoundException e) {
 			throw new ResourceNotFoundException("Id not found " + id);
 		}
@@ -54,32 +55,32 @@ public class PersonService {
 	@Transactional(readOnly = true)
 	public PersonDTO findPersonById(Long id) {
 		Optional<Person> obj = personRepository.findById(id);
-		Person entity = obj.orElseThrow(() -> new ResourceNotFoundException("Entity not Found"));
-		return new PersonDTO(entity);
+		Person person = obj.orElseThrow(() -> new ResourceNotFoundException("Entity not Found"));
+		return new PersonDTO(person);
 	}
 	
 	@Transactional(readOnly = true)
 	public Page<PersonDTO> findAllPersonPaged(Pageable pageable) {
 		Page<Person> list = personRepository.findAll(pageable);
-		return list.map(x -> new PersonDTO(x, x.getAdresses()));
+		return list.map(person -> new PersonDTO(person, person.getAdresses()));
 	}
 	
 	@Transactional
 	public AddressDTO createAddresPerson(Long id, AddressDTO dto) {
-		Person person = personRepository.getReferenceById(id);
-		Address address = new Address();
-		
-		address.setPublicPlace(dto.getPublicPlace());
-		address.setZipCode(dto.getZipCode());
-		address.setNumber(dto.getNumber());
-		address.setCity(dto.getCity());
-		address.setStatus(dto.getStatus());
-		
-		address = addressRepository.save(address);
-		
-		person.getAdresses().add(address);
-		
-		return new AddressDTO(address);
+		try {
+			Person person = personRepository.getReferenceById(id);
+			Address address = new Address();
+			address.setPublicPlace(dto.getPublicPlace());
+			address.setZipCode(dto.getZipCode());
+			address.setNumber(dto.getNumber());
+			address.setCity(dto.getCity());
+			address.setStatus(dto.getStatus());
+			address = addressRepository.save(address);
+			person.getAdresses().add(address);
+			return new AddressDTO(address);
+		} catch (EntityNotFoundException e) {
+			throw new ResourceNotFoundException("Id not found " + id);
+		}
 	}
 	
 	
@@ -93,14 +94,32 @@ public class PersonService {
 		}
 	}
 	
+	@Transactional
+	public PersonDTO changePrimaryAddress(Long perosnId, Long addressId) {
+		try {
+			Person person = personRepository.getReferenceById(perosnId);
+			for(Address address : person.getAdresses()) {
+				if(address.getId() == addressId) {
+					address.setStatus(StatusAddress.PRIMARY);
+				}else {
+					address.setStatus(StatusAddress.SECONDARY);
+				}
+				address = addressRepository.save(address);
+			}
+			return new PersonDTO(person, person.getAdresses());
+		} catch (EntityNotFoundException e) {
+			throw new ResourceNotFoundException("Id not found " + perosnId);
+		}
+	}
 	
-	private void copyDtoToEntity(PersonDTO dto, Person entity, Address address) {
+	
+	private void copyDtoToEntity(PersonDTO personDTO, Person entity, Address address) {
 		
-		entity.setName(dto.getName());
-		entity.setBirthDate(dto.getBirthDate());
+		entity.setName(personDTO.getName());
+		entity.setBirthDate(personDTO.getBirthDate());
 		
 		entity.getAdresses().clear();
-		for (AddressDTO addressDTO : dto.getAdresses()) {
+		for (AddressDTO addressDTO : personDTO.getAdresses()) {
 			
 			Address createAddress = new Address();
 			
