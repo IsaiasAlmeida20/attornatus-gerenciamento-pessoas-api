@@ -1,6 +1,7 @@
 package com.attornatus.gerenciamentopessoas.resources;
 
 import java.net.URI;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -28,7 +29,7 @@ public class PersonResource {
 	
 	@PostMapping
 	public ResponseEntity<PersonDTO> createPerson(@RequestBody PersonDTO personDTO) {
-		personDTO = personService.create(personDTO);
+		personDTO = personService.createPerson(personDTO);
 		URI uri = ServletUriComponentsBuilder
 				.fromCurrentRequest()
 				.path("/{id}")
@@ -39,31 +40,37 @@ public class PersonResource {
 	
 	@PutMapping(value = "/{id}")
 	public ResponseEntity<PersonDTO> updatePerson(@PathVariable Long id, @RequestBody PersonDTO personDTO) {
-		personDTO = personService.update(id, personDTO);
+		personDTO = personService.updatePerson(id, personDTO);
 		return ResponseEntity.ok().body(personDTO);
 	}
 	
 	@GetMapping(value = "/{id}")
 	public ResponseEntity<PersonDTO> findPersonById(@PathVariable Long id) {
-		PersonDTO dto = personService.findById(id);
+		PersonDTO dto = personService.findPersonById(id);
 		return ResponseEntity.ok().body(dto);
 	}
 	
 	@GetMapping
 	public ResponseEntity<Page<PersonDTO>> findAllPerson(Pageable pageable) {
-		Page<PersonDTO> list = personService.findAllPaged(pageable);
+		Page<PersonDTO> list = personService.findAllPersonPaged(pageable);
 		return ResponseEntity.ok().body(list);
 	}
 	
 	@PostMapping(value = "/{id}/address")
-	public ResponseEntity<AddressDTO> insert(@PathVariable Long id, @RequestBody AddressDTO addressDTO) {
-		addressDTO = personService.createAddres(id, addressDTO);
+	public ResponseEntity<AddressDTO> createAddresPerson(@PathVariable Long id, @RequestBody AddressDTO addressDTO) {
+		addressDTO = personService.createAddresPerson(id, addressDTO);
 		URI uri = ServletUriComponentsBuilder
 				.fromCurrentRequest()
 				.path("/{id}")
 				.buildAndExpand(addressDTO.getId())
 				.toUri();
 		return ResponseEntity.created(uri).body(addressDTO);
+	}
+	
+	@GetMapping(value = "/{id}/address")
+	public ResponseEntity<List<AddressDTO>> findAllAddressPerson(@PathVariable Long id) {
+		List<AddressDTO> list = personService.findAllAddressPerson(id);
+		return ResponseEntity.ok().body(list);
 	}
 	
 }

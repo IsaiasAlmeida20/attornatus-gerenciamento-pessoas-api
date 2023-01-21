@@ -1,6 +1,8 @@
 package com.attornatus.gerenciamentopessoas.services;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -28,7 +30,7 @@ public class PersonService {
 	private AddressRepository addressRepository; 
 	
 	@Transactional
-	public PersonDTO create(PersonDTO dto) {
+	public PersonDTO createPerson(PersonDTO dto) {
 		Person entity = new Person();
 		Address address = new Address();
 		copyDtoToEntity(dto, entity, address);
@@ -37,7 +39,7 @@ public class PersonService {
 	}
 	
 	@Transactional
-	public PersonDTO update(Long id, PersonDTO dto) {
+	public PersonDTO updatePerson(Long id, PersonDTO dto) {
 		try {
 			Person entity = personRepository.getReferenceById(id);
 			entity.setName(dto.getName());
@@ -50,20 +52,20 @@ public class PersonService {
 	}
 	
 	@Transactional(readOnly = true)
-	public PersonDTO findById(Long id) {
+	public PersonDTO findPersonById(Long id) {
 		Optional<Person> obj = personRepository.findById(id);
 		Person entity = obj.orElseThrow(() -> new ResourceNotFoundException("Entity not Found"));
-		return new PersonDTO(entity, entity.getAdresses());
+		return new PersonDTO(entity);
 	}
 	
 	@Transactional(readOnly = true)
-	public Page<PersonDTO> findAllPaged(Pageable pageable) {
+	public Page<PersonDTO> findAllPersonPaged(Pageable pageable) {
 		Page<Person> list = personRepository.findAll(pageable);
 		return list.map(x -> new PersonDTO(x, x.getAdresses()));
 	}
 	
 	@Transactional
-	public AddressDTO createAddres(Long id, AddressDTO dto) {
+	public AddressDTO createAddresPerson(Long id, AddressDTO dto) {
 		Person person = personRepository.getReferenceById(id);
 		Address address = new Address();
 		
@@ -78,6 +80,17 @@ public class PersonService {
 		person.getAdresses().add(address);
 		
 		return new AddressDTO(address);
+	}
+	
+	
+	@Transactional(readOnly = true)
+	public List<AddressDTO> findAllAddressPerson(Long id) {
+		try {
+			Person person = personRepository.getReferenceById(id);
+			return person.getAdresses().stream().map(address -> new AddressDTO(address)).collect(Collectors.toList());
+		} catch (EntityNotFoundException e) {
+			throw new ResourceNotFoundException("Id not found " + id);
+		}
 	}
 	
 	
