@@ -33,8 +33,7 @@ public class PersonService {
 	@Transactional
 	public PersonDTO createPerson(PersonDTO personDTO) {
 		Person person = new Person();
-		Address address = new Address();
-		copyDtoToEntity(personDTO, person, address);
+		copyDtoToEntity(personDTO, person);
 		person = personRepository.save(person);
 		return new PersonDTO(person);
 	}
@@ -113,12 +112,12 @@ public class PersonService {
 	}
 	
 	
-	private void copyDtoToEntity(PersonDTO personDTO, Person entity, Address address) {
+	private void copyDtoToEntity(PersonDTO personDTO, Person person) {
 		
-		entity.setName(personDTO.getName());
-		entity.setBirthDate(personDTO.getBirthDate());
+		person.setName(personDTO.getName());
+		person.setBirthDate(personDTO.getBirthDate());
 		
-		entity.getAdresses().clear();
+		person.getAdresses().clear();
 		for (AddressDTO addressDTO : personDTO.getAdresses()) {
 			
 			Address createAddress = new Address();
@@ -131,7 +130,7 @@ public class PersonService {
 			
 			createAddress = addressRepository.save(createAddress);
 			
-			entity.getAdresses().add(createAddress);
+			person.getAdresses().add(createAddress);
 		}
 		
 	}
