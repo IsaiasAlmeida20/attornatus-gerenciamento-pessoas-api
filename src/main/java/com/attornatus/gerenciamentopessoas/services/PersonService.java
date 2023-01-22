@@ -55,7 +55,7 @@ public class PersonService {
 	public PersonDTO findPersonById(Long id) {
 		Optional<Person> obj = personRepository.findById(id);
 		Person person = obj.orElseThrow(() -> new ResourceNotFoundException("Entity not Found"));
-		return new PersonDTO(person);
+		return new PersonDTO(person, person.getAdresses());
 	}
 	
 	@Transactional(readOnly = true)
