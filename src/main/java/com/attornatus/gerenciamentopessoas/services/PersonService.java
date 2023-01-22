@@ -35,7 +35,7 @@ public class PersonService {
 		Person person = new Person();
 		copyDtoToEntity(personDTO, person);
 		person = personRepository.save(person);
-		return new PersonDTO(person);
+		return new PersonDTO(person, person.getAdresses());
 	}
 	
 	@Transactional
