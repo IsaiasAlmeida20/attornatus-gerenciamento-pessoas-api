@@ -1,4 +1,4 @@
-package com.attornatus.gerenciamentopessoas.resources.exception;
+package com.attornatus.gerenciamentopessoas.controllers.exception;
 
 import java.io.Serializable;
 import java.time.Instant;

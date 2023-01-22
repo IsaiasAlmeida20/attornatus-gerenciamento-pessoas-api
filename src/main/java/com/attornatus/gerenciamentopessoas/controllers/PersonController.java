@@ -1,4 +1,4 @@
-package com.attornatus.gerenciamentopessoas.resources;
+package com.attornatus.gerenciamentopessoas.controllers;
 
 import java.net.URI;
 import java.util.List;
@@ -22,7 +22,7 @@ import com.attornatus.gerenciamentopessoas.services.PersonService;
 
 @RestController
 @RequestMapping(value = "/person")
-public class PersonResource {
+public class PersonController {
 	
 	@Autowired
 	private PersonService personService;
