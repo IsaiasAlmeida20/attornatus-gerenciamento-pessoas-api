@@ -97,15 +97,21 @@ public class PersonService {
 	public PersonDTO changePrimaryAddress(Long perosnId, Long addressId) {
 		try {
 			Person person = personRepository.getReferenceById(perosnId);
-			for(Address address : person.getAdresses()) {
-				if(address.getId() == addressId) {
-					address.setStatus(StatusAddress.PRIMARY);
-				}else {
-					address.setStatus(StatusAddress.SECONDARY);
+			Address addr = addressRepository.getReferenceById(addressId);
+			if(person.getAdresses().contains(addr)) {
+				for(Address address : person.getAdresses()) {
+					if(address.getId() == addressId ) {
+						address.setStatus(StatusAddress.PRIMARY);
+					}else {
+						address.setStatus(StatusAddress.SECONDARY);
+					}
+					address = addressRepository.save(address);
 				}
-				address = addressRepository.save(address);
+			}else {
+				throw new ResourceNotFoundException("Id not found " + addressId);
 			}
 			return new PersonDTO(person, person.getAdresses());
+
 		} catch (EntityNotFoundException e) {
 			throw new ResourceNotFoundException("Id not found " + perosnId);
 		}
