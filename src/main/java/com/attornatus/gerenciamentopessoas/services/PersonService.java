@@ -33,7 +33,7 @@ public class PersonService {
 	@Transactional
 	public PersonDTO createPerson(PersonDTO personDTO) {
 		Person person = new Person();
-		copyDtoToEntity(personDTO, person);
+		copyPersonDtoToEntity(personDTO, person);
 		person = personRepository.save(person);
 		return new PersonDTO(person, person.getAdresses());
 	}
@@ -65,15 +65,11 @@ public class PersonService {
 	}
 	
 	@Transactional
-	public AddressDTO createAddresPerson(Long id, AddressDTO dto) {
+	public AddressDTO createAddresPerson(Long id, AddressDTO addressDTO) {
 		try {
 			Person person = personRepository.getReferenceById(id);
 			Address address = new Address();
-			address.setPublicPlace(dto.getPublicPlace());
-			address.setZipCode(dto.getZipCode());
-			address.setNumber(dto.getNumber());
-			address.setCity(dto.getCity());
-			address.setStatus(dto.getStatus());
+			copyAddressDtoToEntity(addressDTO, address);
 			address = addressRepository.save(address);
 			person.getAdresses().add(address);
 			return new AddressDTO(address);
@@ -118,7 +114,7 @@ public class PersonService {
 	}
 	
 	
-	private void copyDtoToEntity(PersonDTO personDTO, Person person) {
+	private void copyPersonDtoToEntity(PersonDTO personDTO, Person person) {
 		
 		person.setName(personDTO.getName());
 		person.setBirthDate(personDTO.getBirthDate());
@@ -139,6 +135,15 @@ public class PersonService {
 			person.getAdresses().add(createAddress);
 		}
 		
+	}
+	
+	private void copyAddressDtoToEntity(AddressDTO addressDTO, Address address) {
+		
+		address.setPublicPlace(addressDTO.getPublicPlace());
+		address.setZipCode(addressDTO.getZipCode());
+		address.setNumber(addressDTO.getNumber());
+		address.setCity(addressDTO.getCity());
+		address.setStatus(addressDTO.getStatus());
 	}
 
 }

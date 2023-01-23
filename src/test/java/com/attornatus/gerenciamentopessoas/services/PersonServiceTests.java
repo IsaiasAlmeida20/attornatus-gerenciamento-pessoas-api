@@ -1,6 +1,5 @@
 package com.attornatus.gerenciamentopessoas.services;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,10 +23,10 @@ import com.attornatus.gerenciamentopessoas.dto.AddressDTO;
 import com.attornatus.gerenciamentopessoas.dto.PersonDTO;
 import com.attornatus.gerenciamentopessoas.entities.Address;
 import com.attornatus.gerenciamentopessoas.entities.Person;
-import com.attornatus.gerenciamentopessoas.enumns.StatusAddress;
 import com.attornatus.gerenciamentopessoas.repositories.AddressRepository;
 import com.attornatus.gerenciamentopessoas.repositories.PersonRepository;
 import com.attornatus.gerenciamentopessoas.services.exceptions.ResourceNotFoundException;
+import com.attornatus.gerenciamentopessoas.tests.Factory;
 
 @ExtendWith(SpringExtension.class)
 public class PersonServiceTests {
@@ -53,11 +52,12 @@ public class PersonServiceTests {
 	void setUp() throws Exception {
 		existingId = 1L;
 		nonExistingId = 2L;
-		person = new Person(null, "Matheus", LocalDate.of(1999, 05, 12));
-		personDTO = new PersonDTO(person);
+		person = Factory.createPerson();
+		personDTO = Factory.createPersonDTO();
 		page = new PageImpl<>(List.of(person));
-		address = new Address(null, "Rua Z", 1200000, 10, "City 03", StatusAddress.SECONDARY);
+		address = Factory.createAddress();
 		addressDTO = new AddressDTO(address);
+		person.getAdresses().add(address);
 		
 		Mockito.when(personRepository.findAll((Pageable)ArgumentMatchers.any())).thenReturn(page);
 		
@@ -69,13 +69,6 @@ public class PersonServiceTests {
 		
 		Mockito.when(personRepository.getReferenceById(existingId)).thenReturn(person);
 		Mockito.when(personRepository.getReferenceById(nonExistingId)).thenThrow(EntityNotFoundException.class);
-//		
-//		Mockito.when(categoryRepository.getReferenceById(existingId)).thenReturn(category);
-//		Mockito.when(categoryRepository.getReferenceById(nonExistingId)).thenThrow(EntityNotFoundException.class);
-//		
-//		Mockito.doNothing().when(repository).deleteById(existingId);
-//		Mockito.doThrow(EmptyResultDataAccessException.class).when(repository).deleteById(nonExistingId);
-//		Mockito.doThrow(DataIntegrityViolationException.class).when(repository).deleteById(dependentId);
 	}
 	
 	@Test
@@ -159,5 +152,4 @@ public class PersonServiceTests {
 			personService.findAllAddressPerson(nonExistingId);
 		});
 	}
-
 }

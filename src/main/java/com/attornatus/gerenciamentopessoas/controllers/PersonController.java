@@ -80,7 +80,7 @@ public class PersonController {
 		return ResponseEntity.ok().body(list);
 	}
 	
-	@PostMapping(value = "/{id}/address")
+	@PostMapping(value = "/address/{id}")
 	@Operation(summary = "Create address to person")
 	@ApiResponse(responseCode = "201", description = "success", content = {
 			@Content(mediaType = "application/json", schema = @Schema(implementation = PersonDTO.class))
@@ -95,7 +95,7 @@ public class PersonController {
 		return ResponseEntity.created(uri).body(addressDTO);
 	}
 	
-	@GetMapping(value = "/{id}/address")
+	@GetMapping(value = "/address/{id}")
 	@Operation(summary = "Find all adresses person")
 	@ApiResponse(responseCode = "200", description = "success", content = {
 			@Content(mediaType = "application/json", schema = @Schema(implementation = PersonDTO.class))
