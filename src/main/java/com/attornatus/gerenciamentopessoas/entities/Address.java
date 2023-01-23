@@ -27,7 +27,7 @@ public class Address implements Serializable {
 	private String publicPlace;
 	
 	@Column(nullable = false)
-	private Long zipCode;
+	private Integer zipCode;
 	
 	@Column(nullable = false)
 	private Integer number;
@@ -42,7 +42,7 @@ public class Address implements Serializable {
 	public Address() {
 	}
 
-	public Address(Long id, String publicPlace, Long zipCode, Integer number, String city, StatusAddress status) {
+	public Address(Long id, String publicPlace, Integer zipCode, Integer number, String city, StatusAddress status) {
 		this.id = id;
 		this.publicPlace = publicPlace;
 		this.zipCode = zipCode;
@@ -67,11 +67,11 @@ public class Address implements Serializable {
 		this.publicPlace = publicPlace;
 	}
 
-	public Long getZipCode() {
+	public Integer getZipCode() {
 		return zipCode;
 	}
 
-	public void setZipCode(Long zipCode) {
+	public void setZipCode(Integer zipCode) {
 		this.zipCode = zipCode;
 	}
 

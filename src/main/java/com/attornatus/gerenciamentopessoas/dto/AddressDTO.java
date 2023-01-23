@@ -10,7 +10,7 @@ public class AddressDTO implements Serializable {
 
 	private Long id;
 	private String publicPlace;
-	private Long zipCode;
+	private Integer zipCode;
 	private Integer number;
 	private String city;
 	private StatusAddress status;
@@ -18,7 +18,7 @@ public class AddressDTO implements Serializable {
 	public AddressDTO() {
 	}
 
-	public AddressDTO(Long id, String publicPlace, Long zipCode, Integer number, String city, StatusAddress status) {
+	public AddressDTO(Long id, String publicPlace, Integer zipCode, Integer number, String city, StatusAddress status) {
 		this.id = id;
 		this.publicPlace = publicPlace;
 		this.zipCode = zipCode;
@@ -52,11 +52,11 @@ public class AddressDTO implements Serializable {
 		this.publicPlace = publicPlace;
 	}
 
-	public Long getZipCode() {
+	public Integer getZipCode() {
 		return zipCode;
 	}
 
-	public void setZipCode(Long zipCode) {
+	public void setZipCode(Integer zipCode) {
 		this.zipCode = zipCode;
 	}
 
